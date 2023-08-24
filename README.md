@@ -8,3 +8,5 @@
 - файлы, оканчивающиеся на .tfvars и .tfvars.json
 - override.tf, override.tf.json и файлы, оканчивающиеся на _override.tf и _override.tf.json
 - файлы .terraformrc и terraform.rc
+
+## committed via vscode
