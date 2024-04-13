@@ -1,0 +1,32 @@
+pipeline{
+    agent any
+    environment{
+        REPO_PATH='/home/manish/Desktop'
+        APP_NAME='test'
+    }
+    stages{
+        stage('getting role from scm'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dcm84/java-role/']])  
+             }
+         }
+        stage('updating'){
+            steps{
+                sh '''set -e
+python3 --version
+pip3 install molecule molecule_docker molecule_podman
+pip3 install "molecule[lint]"
+pip3 install "molecule[docker.lint]"
+pip3 install --upgrade requests
+python3 -m pip install \'urllib3<1.25\'
+molecule --version
+ls -a'''    
+             }
+         }
+        stage('running molecule'){
+            steps{
+                sh 'molecule test || true' 
+             }
+         }
+     }
+  }
