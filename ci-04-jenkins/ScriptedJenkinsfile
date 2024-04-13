@@ -1,0 +1,16 @@
+    environment {
+        PROD_RUN = 'true'
+    }
+    
+    stage("Git checkout"){
+        git url: 'https://github.com/aragastmatb/example-playbook'
+    }
+    stage("Run playbook"){
+        if ('${PROD_RUN}'=='true'){
+            sh 'ansible-playbook site.yml -i inventory/prod.yml'
+        }
+        else {
+            sh 'ansible-playbook site.yml -i inventory/prod.yml --check --diff'
+        }
+    }
+}
